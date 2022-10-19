@@ -1,2 +1,0 @@
-apache-beam[gcp]==2.42.0
-pandas==1.5.0

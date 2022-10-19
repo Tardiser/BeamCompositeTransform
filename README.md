@@ -4,13 +4,13 @@ This repo contains python scripts for demonstrating Apache Beam Composite Transf
 
 ## Pre-requisites
 
-You must have apache_beam and its dependencies installed in your environment with gcp extras to read from cloud storage.
-Appropriate Pandas version must also be installed. Python version 3.9 is recommended.
+You must have apache_beam and its dependencies installed in your environment with gcp and dataframe extras to read from cloud storage and write to csv.
+Python version 3.9 is recommended.
 
-To install the required modules, run the below command on terminal in the same directory with requirements.txt:
+To install the required modules, run the below command on terminal:
 
 ```sh
-pip install -r requirements.txt
+pip install apache_beam[gcp,dataframe]==2.42.0
 ```
 
 ## Running the Pipeline
