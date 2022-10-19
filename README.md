@@ -4,12 +4,13 @@ This repo contains python scripts for demonstrating Apache Beam Composite Transf
 
 ## Pre-requisites
 
-You must apache_beam library installed in your environment with the gcp extra. Python version 3.9 is recommended.
+You must have apache_beam and its dependencies installed in your environment with gcp extras to read from cloud storage.
+Appropriate Pandas version must also be installed. Python version 3.9 is recommended.
 
-To install apache_beam library, run the below command on terminal.
+To install the required modules, run the below command on terminal in the same directory with requirements.txt:
 
 ```sh
-pip install apache_beam[gcp]
+pip install -r requirements.txt
 ```
 
 ## Running the Pipeline
@@ -24,4 +25,12 @@ Optionally, you can give the desired input file path and output path as argument
 python3 app.py \
 --input gs://cloud-samples-data/bigquery/sample-transactions/transactions.csv \
 --output output/results.csv
+```
+
+## Running the Unit Tests
+
+This repo also contains unit tests for the composite transform created. Feel free to change the inputs and expected results within the unit_tests script.
+To run the unit test, you can use:
+```sh
+python3 -m unittest unit_tests.py
 ```
