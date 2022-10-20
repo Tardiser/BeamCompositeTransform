@@ -28,5 +28,5 @@ class CompositeFilterTransactions(beam.PTransform):
                 | "group by" >> beam.GroupBy(lambda s: s['date']).aggregate_field(
                     lambda record: record['transaction_amount'], sum, 'total_amount')
                 | "tuple to dictionary" >> beam.Map(
-                    lambda record: {'date': record.key, 'total_amount': round(record.total_amount, 2)})
+                    lambda record: {'date': record.key, 'total_amount': f'{record.total_amount:.2f}'})
                 )

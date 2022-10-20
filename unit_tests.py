@@ -19,7 +19,7 @@ class CompositeTransformTest(unittest.TestCase):
                   {"timestamp": "2010-01-01 00:00:00 UTC", "transaction_amount": 9}]
 
         # Expected output data after Composite Transform
-        expected = [{"date": "2011-01-09", "total_amount": 91.29}]
+        expected = [{"date": "2011-01-09", "total_amount": "91.29"}]
 
         # Create a test pipeline.
         with TestPipeline() as p:
@@ -45,8 +45,8 @@ class CompositeTransformTest(unittest.TestCase):
                   {"timestamp": "2010-01-01 00:00:00 UTC", "transaction_amount": 9}]
 
         # Expected output data after Composite Transform
-        expected = [{"date": "2011-01-09", "total_amount": 91.0},
-                    {"date": "2010-01-10", "total_amount": 47.26}]
+        expected = [{"date": "2011-01-09", "total_amount": "91.00"},
+                    {"date": "2010-01-10", "total_amount": "47.26"}]
 
         # Create a test pipeline.
         with TestPipeline() as p:
