@@ -1,9 +1,11 @@
 import argparse
+import csv
+import io
 
 import apache_beam as beam
 
-from apache_beam.dataframe.io import read_csv
-from apache_beam.dataframe.convert import to_dataframe, to_pcollection
+from apache_beam.io import WriteToText
+from apache_beam.io.fileio import MatchFiles, ReadMatches
 from apache_beam.options.pipeline_options import PipelineOptions
 from transforms import CompositeFilterTransactions
 
@@ -19,17 +21,27 @@ def run(argv=None):
     parser.add_argument(
         '--output',
         dest='output',
-        default='output/results.csv',
+        default='output/results.jsonl.gz',
         help='Output file to write results to.')
     known_args, pipeline_args = parser.parse_known_args(argv)
 
+    def get_csv_reader(readable_file):
+        return csv.DictReader(io.TextIOWrapper(readable_file.open()))
+
     with beam.Pipeline(options=PipelineOptions(pipeline_args)) as p:
-        records = (p | read_csv(known_args.input))
+        # Read CSV into pcollection
+        read_records = (p
+                        | MatchFiles(known_args.input)
+                        | ReadMatches()
+                        | beam.FlatMap(get_csv_reader))
 
-        to_p = to_pcollection(records) | CompositeFilterTransactions()
+        perform_transforms = read_records | CompositeFilterTransactions()
 
-        df = to_dataframe(to_p)
-        df.to_csv(known_args.output, index=False)
+        # shard name is set to '' to create the output in desired format
+        export = perform_transforms | WriteToText(known_args.output,
+                                                  num_shards=1,
+                                                  shard_name_template='',
+                                                  compression_type='gzip')
 
 
 if __name__ == '__main__':

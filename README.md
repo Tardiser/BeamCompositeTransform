@@ -4,13 +4,13 @@ This repo contains python scripts for demonstrating Apache Beam Composite Transf
 
 ## Pre-requisites
 
-You must have apache_beam and its dependencies installed in your environment with gcp and dataframe extras to read from cloud storage and write to csv.
+You must have apache_beam and its dependencies installed in your environment with gcp extra to read from cloud storage.
 Python version 3.9 is recommended.
 
 To install the required modules, run the below command on terminal:
 
 ```sh
-pip install apache_beam[gcp,dataframe]==2.42.0
+pip install apache_beam[gcp]==2.42.0
 ```
 
 ## Running the Pipeline
@@ -24,7 +24,7 @@ Optionally, you can give the desired input file path and output path as argument
 ```sh
 python3 app.py \
 --input gs://cloud-samples-data/bigquery/sample-transactions/transactions.csv \
---output output/results.csv
+--output output/results.jsonl.gz
 ```
 
 ## Running the Unit Tests
